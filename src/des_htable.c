@@ -13,8 +13,10 @@
 
 typedef unsigned int word;
 
-void evalSbox(byte *a,byte *S,int n)
+void evalSbox(int ii, byte *a, int n)
 {
+  byte *S=sbox+(ii << 6);
+
   unsigned char T[K][n];
   unsigned char Tp[K][n];
   byte b[n];
