@@ -45,6 +45,44 @@ void evalSbox(byte *a,byte *S,int n)
   for(j=0;j<n;j++) a[j]=b[j];
 }
 
+// @ reference
+// High Order Masking of Look-up Tables with Common Shares - Algorithm 3
+void evalSbox_inc(int ii, byte *a, int n)
+{
+  
+  unsigned char T[K][n];
+  unsigned char Tp[K][n];
+  byte b[n];
+  int i,j,k,k2;
+
+  byte *S=sbox+(ii << 6);
+ 
+  for(k=0;k<K;k++)
+    share(S[k],T[k],n);
+
+  for(i=0;i<(n-1);i++)
+  {
+    for(k=0;k<K;k++)
+    {
+      k2=k ^ a[i];
+      memcpy(Tp[k],T[k2],i + 1);
+    }
+
+    for(k=0;k<K;k++)
+    {
+      memcpy(T[k],Tp[k], i + 1);
+      T[k][i + 2] = 0;
+      refresh(T[k], i + 2);
+    }
+  }
+  
+  for(j=0;j<n;j++)
+    b[j]=T[a[n-1]][j];
+
+  refresh(b,n);
+  for(j=0;j<n;j++) a[j]=b[j];
+}
+
 void refreshword(word a[],int n)
 {
   int i;
