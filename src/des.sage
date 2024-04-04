@@ -54,7 +54,10 @@ def test():
       li.extend(listCoef(p,10))
     print([fromGF64(u(0)) for u in (c,c1,q1,s1,c2,q2,s2)])
     print(fromGF64(f(0)))
-    print(fromGF64(c1(0),q1(0)))
+    print(fromGF64(c1(0)))
+    print(fromGF64(q1(0)))
     return
   print(li)
   print(len(li))
+
+test()
