@@ -73,7 +73,9 @@ void evalSbox_inc(int ii, byte *a, int n)
     for(k=0;k<K;k++)
     {
       memcpy(T[k],Tp[k], i + 1);
-      T[k][i + 2] = 0;
+      if (i != n-2) {
+        T[k][i + 2] = 0;
+      }
       refresh(T[k], i + 2);
     }
   }
